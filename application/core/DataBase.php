@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 27.11.13
- * Time: 22:01
- */
+namespace core;
 
 class DataBase {
     private $db;

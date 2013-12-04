@@ -1,4 +1,9 @@
 <?php
+namespace modules\user\controllers;
+
+use core\Registry;
+use core\View;
+use \Exception;
 
 class UserController
 {

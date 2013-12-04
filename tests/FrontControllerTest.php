@@ -20,6 +20,6 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
     public function testGetControllerPath()
     {
         $frontController = new FrontController();
-        $this->assertEquals($frontController->getControllerPath('Index', 'default'), DIR_MOD.'default/controllers/Index.php');
+        $this->assertEquals($frontController->getControllerPath('Index', 'main'), DIR_MOD.'main/controllers/IndexController.php');
     }
 }

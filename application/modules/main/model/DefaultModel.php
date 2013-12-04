@@ -1,15 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 30.11.13
- * Time: 20:47
- */
+namespace modules\main\controllers;
 
-class DefaultModel {
+use core\classTables\Roles;
+use core\classTables\Users;
+
+class DefaultModel
+{
     public  static function printDb()
     {
-        $roles=new roles();
+        $roles=new Roles();
         $sel=$roles->selectPrepare();
         $result=$sel->select(['*'])->fetchAll(null);
         echo "<br><pre>";
@@ -17,24 +16,24 @@ class DefaultModel {
     }
     public static function insertUsers()
     {
-        $insertUser=new users();
+        $insertUser=new Users();
         $insertUser->insert(['login'=>'user@mail.ru','email'=>'user@mail.ru','password'=>'354546']);
     }
     public static function deleteUsers()
     {
-        $deleteUser=new users();
+        $deleteUser=new Users();
         //$deleteUser->delete('login=?',['user@mail.ru']);
         //$deleteUser->delete("login='name5'",null);
         $deleteUser->delete('login=? or id>?',['name4',2]);
     }
     public static function updateUsers()
     {
-        $updateUser=new users();
+        $updateUser=new Users();
         $updateUser->update(['login'=>'new@mail','password'=>'77777'],'id=?',[3]);
     }
     public static function selectUsers()
     {
-        $selectUser=new users();
+        $selectUser=new Users();
         $selObj=$selectUser->selectPrepare(); //для создания объекта класса Select
         /* example 1 */
         //возвращает ассициативный массив, содержащий все строки: 3 записи с полями login и password, отсортированные по полю role

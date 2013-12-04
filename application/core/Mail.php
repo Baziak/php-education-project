@@ -1,6 +1,7 @@
 <?php
 
-class Mail {
+class Mail
+{
     private $headers = '';
     private $smtp_server = '';
     private $smtp_port = '';
@@ -12,7 +13,9 @@ class Mail {
     private $mail_subject = '';
     private $mail_body = '';
 
-    const NEW_LINE = '\r\n';
+    private $errors = array();
+
+    const NEW_LINE = "\r\n";
 
     public function __construct($server, $port, $user = '', $pass = '', $from = '', $to = '', $subject = '', $body = '')
     {
@@ -23,7 +26,7 @@ class Mail {
 
         $this->mail_from = $from;
         $this->mail_to = $to;
-        $this->mail_subject = $server;
+        $this->mail_subject = $subject;
         $this->mail_body = $body;
         $this->mk_headers();
     }
@@ -54,34 +57,30 @@ class Mail {
 
     public function send()
     {
-        $connect = fsockopen($this->smtp_server, $this->smtp_port,$errno, $errstr, 10);
-        fputs($connect,"EHLO " . $this->smtp_server . self::NEW_LINE);
-        $data = fgets($connect,1024);
-        echo $data;
-        fputs($connect,"AUTH LOGIN" . self::NEW_LINE);
-        $data = fgets($connect,1024);
-        echo $data;
-        fputs($connect,base64_encode($this->smtp_user) . self::NEW_LINE);
+        $connect = fsockopen($this->smtp_server, $this->smtp_port, $errno, $errstr, 10);
+        $this->get_data($connect);
+        fputs($connect, "EHLO " . $this->smtp_server . self::NEW_LINE);
+        $this->get_data($connect);
+        fputs($connect, "AUTH LOGIN" . self::NEW_LINE);
+        $this->get_data($connect);
+        fputs($connect, base64_encode($this->smtp_user) . self::NEW_LINE);
+        $this->get_data($connect);
+        fputs($connect, base64_encode($this->smtp_pass) . self::NEW_LINE);
+        $this->get_data($connect);
+        fputs($connect, "MAIL FROM:" . $this->mail_from . self::NEW_LINE);
+        $this->get_data($connect);
+        fputs($connect, "RCPT TO:" . $this->mail_to . self::NEW_LINE);
+        $this->get_data($connect);
+        fputs($connect, "DATA" . self::NEW_LINE);
+        $this->get_data($connect);
+        fputs($connect, $this->headers . self::NEW_LINE . $this->mail_body . self::NEW_LINE . "." . self::NEW_LINE);
         $data = $this->get_data($connect);
-        echo $data;
-        fputs($connect,base64_encode($this->smtp_pass) . self::NEW_LINE);
-        $data = $this->get_data($connect);
-        echo $data;
-        fputs($connect,"MAIL FROM:" . $this->mail_from . self::NEW_LINE);
-        $data = $this->get_data($connect);
-        echo $data;
-        fputs($connect,"RCPT TO:" . $this->mail_to . self::NEW_LINE);
-        $data = $this->get_data($connect);
-        echo $data;
-        fputs($connect,"DATA" . self::NEW_LINE);
-        $data = $this->get_data($connect);
-        echo $data;
-        fputs($connect,$this->headers . self::NEW_LINE . $this->mail_body . self::NEW_LINE . "." . self::NEW_LINE);
-        $data = $this->get_data($connect);
-        echo $data;
-        fputs($connect,"QUIT" . self::NEW_LINE);
-        $data = $this->get_data($connect);
-        echo $data;
+        $code = substr($data, 0, 3);
+        if ((int)$code == 500) {
+            $this->errors[] = "Sending email was failed!";
+        }
+        fputs($connect, "QUIT" . self::NEW_LINE);
+        $this->get_data($connect);
         fclose($connect);
     }
 
@@ -91,16 +90,17 @@ class Mail {
         $this->headers .= "Content-type: text/html; charset=utf-8" . self::NEW_LINE;
         $this->headers .= "To: <{$this->mail_to}>" . self::NEW_LINE;
         $this->headers .= "From: <{$this->mail_from}>" . self::NEW_LINE;
-        $this->headers .= "Subject: {$this->mail_subject}";
+        $this->headers .= "Subject: {$this->mail_subject}" . self::NEW_LINE;
     }
 
     private function get_data($connect)
     {
-        $data="";
-        while($str = fgets($connect,515))
-        {
+        $data = "";
+        while ($str = fgets($connect, 515)) {
             $data .= $str;
-            if(substr($str,3,1) == " ") { break; }
+            if (substr($str, 3, 1) == " ") {
+                break;
+            }
         }
         return $data;
     }

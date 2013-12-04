@@ -1,5 +1,7 @@
 <?php
-namespace Core\View;
+namespace core;
+
+use \Exception;
 
 class View
 {
@@ -7,7 +9,7 @@ class View
     private $page;
     private $include_file;
     private $variables = array();
-    private $template = '/template.php';
+    private $template = 'template.php';
     private $module;
 
     private $params = array(
@@ -92,6 +94,6 @@ class View
 
     public function display()
     {
-        require_once(DIR . $this->template);
+        require_once(DIR_PUBLIC . $this->template);
     }
 }

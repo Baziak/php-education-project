@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anna
- * Date: 28.11.13
- * Time: 16:29
- */
+namespace core;
 
 class Select {
     private  $table;

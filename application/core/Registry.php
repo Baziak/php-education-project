@@ -1,4 +1,6 @@
 <?php
+namespace core;
+
 class Registry
 {
     private static $mass=array();
