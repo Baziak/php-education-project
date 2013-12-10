@@ -1,0 +1,112 @@
+body {
+    background: url("1457300.jpg") fixed;
+}
+header.news{
+    width: 874px;
+    display: block;
+    /*padding: 9.5px;*/
+    float: right;
+    right: 0px;
+    margin: 10px 0px;
+    text-align: left;
+}
+div.news {
+    width: 874px;
+    display: block;
+    /*padding: 9.5px;*/
+    float: right;
+    right: 0px;
+    margin: 0px 0px 10px;
+    font-size: 13px;
+    line-height: 1.42857;
+    color: rgb(51, 51, 51);
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #ffffff;
+    /*background-color: rgb(245, 245, 245);
+   /* background-image: url("1566125.jpg");*/
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    opacity: 0.9;
+}
+div.news .container {
+     text-align: center;
+     width: auto;
+     margin:3% 14px;
+     padding: 2%;
+     background-color: #ffffff;
+     border: 2px solid rgb(85, 66, 158);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(85, 66, 158,1);
+ }
+div.news .container img.img-thumbnail{
+    margin: 6px;
+}
+div.news .container .likes_dislikes{
+    height: 46px;
+   vertical-align: middle;
+}
+div.news .container .likes_dislikes button {
+    background-color: #ffffff;
+    vertical-align: middle;
+    border: #ffffff;
+}
+div.news .container header{
+    color: darkslateblue;
+    font-size: 16px;
+    font-family: "Comic Sans MS";
+    padding-bottom: 5px;
+}
+div.news .container .row-fluid{
+    float: left;
+    width: 800px;
+    vertical-align: middle;
+}
+div.news .container .row-fluid .date{
+    display: block;
+    float: left;
+    width: 400px;
+    text-align: left;
+    font-size: 10px;
+    color: #999;
+}
+div.news .container .row-fluid .rating{
+    display: block;
+    width: 400px;
+    float: left;
+    text-align: right;
+}
+div.news .container .row-fluid .rating .likes{
+    margin-left: 10px;
+    color: magenta;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+div.news .container .row-fluid .rating .dislikes{
+    margin-left: 5px;
+    color: blue;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black, 0 0 1em black;
+}
+header.news{
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+}
+div.pages_number{
+    text-align: center;
+}
+div.pages_number li.active a{
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: rgb(86,61,124);
+    border: 1px solid rgb(86,61,124);
+}
+div.pages_number li.not_active a{
+    z-index: 2;
+    color: purple;
+    cursor: default;
+    background-color: #ffffff;
+    border: 1px solid rgb(86,61,124);
+}

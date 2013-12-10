@@ -14,6 +14,7 @@ class Select
     private $limit;
     private $join;
     private $cols;
+    private $tables;
     public function __construct($table, PDO $db)
     {
         $this->table=$table;
@@ -36,26 +37,26 @@ class Select
         $values=array_values($construct);
         $convert="";
         for ($i=0; $i<count($construct); $i++) {
-            if ($values[$i] != '?' && strtoupper($values[$i])!='IS NULL') {
+            if ($values[$i] != '?' && strtoupper($values[$i])!='IS NULL' && (in_array('.', $values))) {
                 $values[$i]=$this->db->quote($values[$i]);
             }
             $convert.=$keys[$i].$values[$i]." ";
 
         }
-        $this->where="WHERE ".$convert;
+        $this->where=" WHERE ".$convert;
         return $this;
     }
     public function order($field, $flag = null)
     {
         switch ($flag) {
             case 'ASC':
-                $this->order='ORDER BY '.$field.' ASC'; //в восходящем порядке
+                $this->order=' ORDER BY '.$field.' ASC'; //в восходящем порядке
                 break;
             case 'DESC':
-                $this->order='ORDER BY '.$field.' DESC';//в обратном
+                $this->order=' ORDER BY '.$field.' DESC';//в обратном
                 break;
             default:
-                $this->order='ORDER BY '.$field;
+                $this->order=' ORDER BY '.$field;
         }
             return $this;
     }
@@ -76,7 +77,8 @@ class Select
     }
     public function fetchAll($values = null)
     {
-        $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
+        $this->sql="SELECT ".$this->cols." FROM `$this->table`".$this->tables
+            .$this->join.$this->where.$this->order.$this->limit;
         $sql=$this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i=0; $i<count($values); $i++) {
@@ -90,7 +92,8 @@ class Select
     }
     public function fetch($values = null)
     {
-        $this->sql="SELECT ".$this->cols." FROM `$this->table` ".$this->join.$this->where.$this->order.$this->limit;
+        $this->sql="SELECT ".$this->cols." FROM `$this->table`".$this->tables
+            .$this->join.$this->where.$this->order.$this->limit;
         $sql=$this->db->prepare($this->sql);
         if (!empty($values)) {
             for ($i=0; $i<count($values); $i++) {
@@ -101,5 +104,16 @@ class Select
         $result=$sql->fetch(PDO::FETCH_ASSOC);
         //$sql->debugDumpParams();
         return $result;
+    }
+    public function from($tables = null)
+    {
+        $t_old=array();
+        if ($tables!=null) {
+            for ($i=0; $i<count($tables); $i++) {
+                $t_old[$i]="`".$tables[$i]."`";
+            }
+            $this->tables=",".implode(",", $t_old);
+            return $this;
+        }
     }
 }

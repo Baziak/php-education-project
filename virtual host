@@ -1,8 +1,8 @@
 
 <VirtualHost *:80>
   ServerName php-project
-  DocumentRoot /opt/lampp/htdocs/php-education-project/public
- <Directory /opt/lampp/htdocs/php-education-project/public>      
+  DocumentRoot /var/www/php-education-project/public
+ <Directory /var/www/php-education-project/public>
   AllowOverride All
   Order allow,deny
   Allow from all

@@ -25,6 +25,7 @@ nav.navbar ul.nav a {
     color: #c0c0c0;
 }
 
+
 nav.navbar ul.nav a:hover {
     color: #ffffff;
 }
@@ -46,3 +47,13 @@ span.glyphicon-search {
 	right: 150px;
 	top: 15px;
 }
+section.content.row.col-md-8.col-md-offset-2{
+
+    position: static;
+}
+footer.col-md-8.col-md-offset-2.row{
+    position: static;
+    color: #ffffff;
+}
+
+

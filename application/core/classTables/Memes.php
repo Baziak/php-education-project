@@ -5,5 +5,5 @@ use core\DataBase;
 
 class Memes extends DataBase
 {
-    static protected $classTable="Memes";
+    static protected $classTable="memes";
 }

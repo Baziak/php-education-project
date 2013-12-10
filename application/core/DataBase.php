@@ -8,6 +8,7 @@ class DataBase
 {
     private $db;
     private $className;
+    private $where;
     public function __construct()
     {
         $class=get_class($this);
@@ -45,8 +46,7 @@ class DataBase
         //$cols=implode(',', array_keys($col));
         $cols_v=array_keys($col);
         $cols_value=array();
-        for ($i=0;$i<count($col);$i++)
-        {
+        for ($i=0; $i<count($col); $i++) {
             $cols_value[$i]='`'.$cols_v[$i].'`';
         }
         $cols=implode(',', $cols_value);
@@ -62,13 +62,20 @@ class DataBase
         for ($i=0; $i<count($fields); $i++) {
             $fields_cols=array_keys($fields);
             $fields_val=array_values(($fields));
-            $fields_res[$i]="$fields_cols[$i]='$fields_val[$i]'";
+            if (in_array('+', $fields_val)) {
+                $fields_res[$i]="$fields_cols[$i]='$fields_val[$i]'";
+            } else {
+                $fields_res[$i]="$fields_cols[$i]=$fields_val[$i]";
+            }
         }
         $fields_res=implode(",", $fields_res);
-        $sql=$this->db->prepare("UPDATE `{$this->className}` SET $fields_res where $construct");
+        if ($construct!=null) {
+            $this->where=" where ".$construct;
+        }
+        $sql=$this->db->prepare("UPDATE `{$this->className}` SET $fields_res $this->where");
 
         if (!empty($values)) {
-            $sql=$this->db->prepare("UPDATE `{$this->className}` SET $fields_res where $construct");
+            $sql=$this->db->prepare("UPDATE `{$this->className}` SET $fields_res $this->where");
             for ($i=0; $i<count($values); $i++) {
                 $sql->bindParam($i+1, $values[$i]);
             }

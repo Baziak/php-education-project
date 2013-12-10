@@ -28,16 +28,13 @@ class UserController
         $User->profile($_SESSION['user_id']);
         $module = Registry::getValue('module');
         $v = new View($module, 'profile.php');
-        foreach ($User as $property => $value)
-        {
+        foreach ($User as $property => $value) {
             $v->assign($property, $value);
         }
-        try
-        {
+        try {
             $v -> addIntoTemplate();
             $v -> display();
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             echo $e -> getMessage();
         }
     }
