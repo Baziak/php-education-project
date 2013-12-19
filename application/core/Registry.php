@@ -3,13 +3,13 @@ namespace core;
 
 class Registry
 {
-    private static $mass=array();
-    public static function setValue($value, $key = '')
+    private static $reg=array();
+    public static function setValue($value, $key)
     {
-        Registry::$mass[$key]=$value;
+        Registry::$reg[$key]=$value;
     }
     public static function getValue($key)
     {
-        return Registry::$mass[$key];
+        return Registry::$reg[$key];
     }
 }

@@ -1,22 +1,111 @@
 body {
-    background: url("1457300.jpg") fixed;
+    /*background: url("1457300.jpg") fixed;*/
+}
+div.news_content {
+    width: 100%;
+    height: auto;
+}
+div.top_users {
+    width: 100%;
 }
 header.news{
-    width: 874px;
+    width: 73%;
+    /*min-width: 874px;*/
     display: block;
     /*padding: 9.5px;*/
-    float: right;
+    float: left;
     right: 0px;
-    margin: 10px 0px;
+    margin: 0px 0px 10px 10px;
+    text-align: left;
+    color: #ffffff;
+}
+header.top_users {
+    width: 25%;
+    float: left;
+    margin: 0px 0px 10px;
+    text-align: left;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 36px;
+    vertical-align: bottom;
+}
+header.top {
+    color: mediumpurple;
+    font-size: 22px;
+    border-bottom: 2px solid rgba(85, 66, 158,1);
+    text-align: center;
+    text-shadow: 1px 1px 1px black, 0 0 1px #39b3d7;
+    padding: 5px;
+    background-color:rgba(245, 245, 245,1);
+    border-radius: 4px;
+}
+aside.top_users {
+    width: 22%;
+    float: left;
+    position: relative;
+    margin: 0px 20px 0px 10px;
+    line-height: 1.42857;
+    word-break: break-all;
+    word-wrap: break-word;
+    /*background-color: #ffffff;*/
+    background-color:rgba(245, 245, 245,0);
+    /*background-color: rgb(245, 245, 245);
+   /* background-image: url("1566125.jpg");*/
+    border: 1px solid rgba(85, 66, 158,1);
+    border-radius: 10px;
+    opacity: 0.9;
+    position: relative;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: "Comic Sans MS";
+    padding-bottom: 5px;
+    box-shadow: 0 0 10px rgba(85, 66, 158,1);
+}
+aside.top_users table {
+    text-align: center;
+    width: 100%;
+}
+td.numeration1,td.numeration {
+    padding: 5px;
+    text-align: center;
+}
+aside.top_users table td.numeration1 {
+    vertical-align: bottom;
+    padding-bottom: 15px;
+}
+aside.top_users table tr {
+    border-bottom: 1px solid #ffffff;
+    border-radius: 10px;
+}
+aside.top_users table tr.main td.users {
+    vertical-align: middle;
     text-align: left;
 }
-div.news {
-    width: 874px;
+aside.top_users table tr.firstUser {
+    text-align: center;
+    border-radius: 10px;
+    background-image: url("2.gif");
+    font-size: 20px;
+    font-weight: bold;
+}
+aside.top_users table tr img.img-thumbnail.top-user {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 145px;
+}
+aside.top_users li {
+    color:#ffffff;
+    vertical-align: middle;
+}
+section.news {
+    width: 73%;
+    /*min-width: 874px;*/
     display: block;
     /*padding: 9.5px;*/
-    float: right;
+    float: left;
     right: 0px;
-    margin: 0px 0px 10px;
+    margin: 0px 0px 10px 10px;
     font-size: 13px;
     line-height: 1.42857;
     color: rgb(51, 51, 51);
@@ -28,8 +117,9 @@ div.news {
     border: 1px solid rgb(204, 204, 204);
     border-radius: 4px;
     opacity: 0.9;
+    position: relative;
 }
-div.news .container {
+section.news .container {
      text-align: center;
      width: auto;
      margin:3% 14px;
@@ -39,50 +129,54 @@ div.news .container {
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(85, 66, 158,1);
  }
-div.news .container img.img-thumbnail{
+section.news .container img.img-thumbnail{
     margin: 6px;
 }
-div.news .container .likes_dislikes{
+section.news .container .likes_dislikes{
     height: 46px;
    vertical-align: middle;
 }
-div.news .container .likes_dislikes button {
+section.news .container .likes_dislikes button {
     background-color: #ffffff;
     vertical-align: middle;
     border: #ffffff;
 }
-div.news .container header{
+section.news div.loading {
+    height: 33px;
+    background: url("ajax-loader.gif") center no-repeat;
+}
+section.news .container header{
     color: darkslateblue;
     font-size: 16px;
     font-family: "Comic Sans MS";
     padding-bottom: 5px;
 }
-div.news .container .row-fluid{
+section.news .container .row-fluid{
     float: left;
-    width: 800px;
+    width: 100%;
     vertical-align: middle;
 }
-div.news .container .row-fluid .date{
+section.news .container .row-fluid .date{
     display: block;
     float: left;
-    width: 400px;
+    width: 50%;
     text-align: left;
     font-size: 10px;
     color: #999;
 }
-div.news .container .row-fluid .rating{
+section.news .container .row-fluid .rating{
     display: block;
-    width: 400px;
-    float: left;
+    width: 50%;
+    float: right;
     text-align: right;
 }
-div.news .container .row-fluid .rating .likes{
+section.news .container .row-fluid .rating .likes{
     margin-left: 10px;
     color: magenta;
     font-weight: bold;
     text-shadow: 1px 1px 2px black, 0 0 1em red;
 }
-div.news .container .row-fluid .rating .dislikes{
+section.news .container .row-fluid .rating .dislikes{
     margin-left: 5px;
     color: blue;
     font-weight: bold;

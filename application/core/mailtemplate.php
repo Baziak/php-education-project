@@ -6,4 +6,5 @@
     <tr><?= $this->view['footer']; ?></tr>
     </tbody>
 </table>
-<?php $this->mail_body = ob_get_clean(); ?>
+<?php $this->mail_body = ob_get_clean();
+?>

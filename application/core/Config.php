@@ -19,7 +19,7 @@ class Config
     private static function parseConfig()
     {
         $ConfigFiles = glob(DIR_CORE . '*.ini');
-        //$ConfigFiles = glob(DIR_CORE . 'local.ini');
+        //$ConfigFiles = glob(DIR_CORE . 'config.ini');
         if (is_array($ConfigFiles)) {
             if (count($ConfigFiles) > 1) {
                 for ($i = 0; $i < count($ConfigFiles); $i++) {
