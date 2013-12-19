@@ -182,8 +182,8 @@ class UserController
                 {
                     ob_start();
                     session_start();
-                    $id=$userDAO->getUserId($user);
-                    $_SESSION['id']=$id;
+                    $arr=$userDAO->getUserId($user);
+                    $_SESSION['id']=$arr[0]['id'];
                     $_SESSION['username']=$username;
                     header('Location: /main/index/index');
                     ob_end_flush();

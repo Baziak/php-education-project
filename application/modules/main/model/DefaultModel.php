@@ -100,12 +100,11 @@ class DefaultModel
     }
     public static function test()
     {
-       $selUsers=new Users();
+        $selUsers=new Users();
         $selObj1=$selUsers->selectPrepare();
         $result=$selObj1->selectColumns(['username','avatar'])->distinct('1')->join('inner','memes','id','user_id')
             ->where(['year(memes.`date_create`)='=>'year(now()) and','week(memes.`date_create`)='=>'(week(now(),7)-1)'])
             ->order('likes','desc')->fetchAll(null);
-
         return $result;
     }
     public static function testUpdate()

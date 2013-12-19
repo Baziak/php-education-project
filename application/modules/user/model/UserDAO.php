@@ -16,7 +16,6 @@ class UserDAO
     }
 
     public function insert(User $user){
-        echo "INSERT   ".$user->username." ".$user->email;
         $insertUser=new Users();
         $insertUser->insert(['username'=>$user->username, 'email'=>$user->email, 'password'=>$user->password,
             'date_of_birth'=>$user->date_of_birth]);
