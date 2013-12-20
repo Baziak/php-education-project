@@ -8,6 +8,7 @@
 namespace modules\news\controllers;
 
 use core\Registry;
+use core\Request;
 use core\View;
 
 use \Exception;
@@ -20,32 +21,52 @@ class IndexController
         $module=Registry::getValue('module');
         $v = new View($module, 'memes.php');
         $v->assign('title', 'News');
-        if (!empty($_GET)) {
-            $page=(int)$_GET['page'];
-        } else {
-            $page=1;
-        }
-        $v->assign('memes', NewsModel::getMemes($page));
-        $v->assign('countPages', NewsModel::getCountPages());
+        $startFrom=0;
+        $v->assign('memes', NewsModel::getMemes($startFrom));
+        $v->assign('topUsers', NewsModel::topUsers());
+        $v->assign('userRating',NewsModel::userRating());
+        $request=new Request();
+        $action=$request->getAction();
+        $v->assign('action', $action);
         try {
             $v->addIntoTemplate();
             $v->display();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+    }
+    public function memesAction()
+    {
+        $module=Registry::getValue('module');
+        $userRating=NewsModel::userRating();
+        if (isset($_POST['startFrom'])) {
+            $startFrom=$_POST['startFrom'];
+        } else {
+            die();
+        }
+        if (isset($_POST['action'])) {
+            $act=$_POST['action'];
+        }
+        if ($act=='index') {
+            $memes=NewsModel::getMemes($startFrom);
+        } else {
+            $memes=NewsModel::getMemesByRating($startFrom);
+        }
+        //echo "<br start from=>".$startFrom;
+        include $file=DIR_MOD.$module."/views/printMemes.php";
     }
     public function ratingAction()
     {
+        $startFrom=0;
         $module=Registry::getValue('module');
         $v = new View($module, 'memes.php');
+        $v->assign('topUsers', NewsModel::topUsers());
+        $v->assign('userRating',NewsModel::userRating());
+        $request=new Request();
+        $action=$request->getAction();
+        $v->assign('action', $action);
         $v->assign('title', 'News');
-        if (!empty($_GET)) {
-            $page=(int)$_GET['page'];
-        } else {
-            $page=1;
-        }
-        $v->assign('memes', NewsModel::getMemesByRating());
-        //$v->assign('countPages', NewsModel::getCountPages());
+        $v->assign('memes', NewsModel::getMemesByRating($startFrom));
         try {
             $v->addIntoTemplate();
             $v->display();
@@ -53,27 +74,20 @@ class IndexController
             echo $e->getMessage();
         }
     }
-    public function likeAction()
+    /*public function updateLikesAction()
     {
+        $module=Registry::getValue('module');
         if (!empty($_POST)) {
-            $id_meme=$_POST['like'];
-            NewsModel::updateLike($id_meme);
-            header("Location:".HTTP_URL_PUB."news/index/index");
+            $buttonName=$_POST['buttonName'];
+            $id_meme=$_POST['buttonValue'];
+            if ($buttonName=='like') {
+                NewsModel::updateLike($id_meme);
+            } elseif ($buttonName=='dislike') {
+                NewsModel::updateDislike($id_meme);
+            }
+            $rating=NewsModel::getLikesDislikes($id_meme);
+            include $file=DIR_MOD.$module."/views/ratingMemes.php";
         }
-    }
-    public function dislikeAction()
-    {
-        if (!empty($_POST)) {
-            $id_meme=$_POST['dislike'];
-            NewsModel::updateDislike($id_meme);
-            header("Location:".HTTP_URL_PUB."news/index/index");
-        }
-    }
-    public function paginationAction()
-    {
-        if (!empty($_GET)) {
-            $pagesNumber=(int)$_GET['page'];
-            var_dump($pagesNumber);
-        }
-    }
+
+    }*/
 }

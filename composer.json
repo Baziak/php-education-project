@@ -1,12 +1,35 @@
 {
+
+  /*  "require": {
+        "KLogger/src": "dev-master"
+    },*/
+
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
+        "phpunit/dbunit": ">=1.2",
         "squizlabs/php_codesniffer": "1.4.*"
     },
     "autoload": {
         "psr-0": {
-            "core\\": "application/"
+            "core\\": "application/",
+            "modules\\": "modules/"
         }
     }
 
+   /* "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "KLogger/src",
+                "version": "dev-master",
+                "source": {
+                    "url": "git://github.com/katzgrau/KLogger.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+
+            }
+        }
+    ]
+*/
 }

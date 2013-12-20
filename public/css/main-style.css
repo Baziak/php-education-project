@@ -55,5 +55,32 @@ footer.col-md-8.col-md-offset-2.row{
     position: static;
     color: #ffffff;
 }
+#search-form .form-group {
+    position: relative;
+}
+.form-group .glyphicon-search{
+    top: 8px;
+    left: 8px;
+}
 
+div.rating
+{
+    display: block;
+    text-align: right;
+}
 
+div.rating .likes
+{
+    margin-left: 10px;
+    color: magenta;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+
+div.rating .dislikes
+{
+    margin-left: 5px;
+    color: blue;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black, 0 0 1em black;
+}
