@@ -77,6 +77,8 @@ class User
                 $avatar->writeimage($UploadFile) or die('error in writing image');
                 rename($UploadFile, $UploadDir . $UserId . '_user.jpg') or die('error in renaming');
                 $this->avatar = $UploadDir . $UserId . '_user.jpg';
+                $UpdateUserAvatar = new Users();
+                $UpdateUserAvatar->update(['avatar' => $UserId.'_user.jpg'], 'id=?', [$UserId]);
             } else {
                 $this->user_error['avatar'] = 'Слишком большой размер картинки!';
             }

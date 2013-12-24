@@ -210,45 +210,30 @@ class UserController
 
     public function profileAction()
     {
-        $User = new model\User();
-        if (isset($_GET['id']) && $_GET['id'] != $_SESSION['id']) {
-            $User->profile($_GET['id']);
-            Registry::setValue($_GET['id'], 'user');
-            $module = Registry::getValue('module');
-            $ViewUser = new View($module, 'profileGuest.php');
-            if ($User->isSubscribed($_GET['id'])) {
-                $ViewUser->assign('buttonClass', 'unsub');
-                $ViewUser->assign('buttonValue', 'Отписаться');
+        if(isset($_SESSION['id']))
+        {
+            $User = new model\User();
+            if (isset($_GET['id']) && $_GET['id'] != $_SESSION['id']) {
+                $User->profile($_GET['id']);
+                Registry::setValue($_GET['id'], 'user');
+                $module = Registry::getValue('module');
+                $ViewUser = new View($module, 'profileGuest.php');
+                $ViewUser->assign('title', $User->username.' Profile');
+                if ($User->isSubscribed($_GET['id'])) {
+                    $ViewUser->assign('buttonClass', 'unsub');
+                    $ViewUser->assign('buttonValue', 'Отписаться');
+                } else {
+                    $ViewUser->assign('buttonClass', 'sub');
+                    $ViewUser->assign('buttonValue', 'Подписаться');
+                }
             } else {
-                $ViewUser->assign('buttonClass', 'sub');
-                $ViewUser->assign('buttonValue', 'Подписаться');
+                $User->profile($_SESSION['id']);
+                $module = Registry::getValue('module');
+                $ViewUser = new View($module, 'profile.php');
+                $ViewUser->assign('title', 'My Profile');
             }
-        } else {
-            $User->profile($_SESSION['id']);
-            $module = Registry::getValue('module');
-            $ViewUser = new View($module, 'profile.php');
-        }
-        $MemesNumber = count($User->paths_to_my_memes);
-        $ViewUser->assign('MemesNumber', $MemesNumber);
-        foreach ($User as $property => $value) {
-            $ViewUser->assign($property, $value);
-        }
-        try {
-            $ViewUser->addIntoTemplate();
-            $ViewUser->display();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    public function changeAction()
-    {
-        $User = new model\User();
-        if (isset($_POST['user'])) {
-            $User->changeProfile($_POST, $_SESSION['id']);
-            $User->profile($_SESSION['id']);
-            $module = Registry::getValue('module');
-            $ViewUser = new View($module, 'change.php');
+            $MemesNumber = count($User->paths_to_my_memes);
+            $ViewUser->assign('MemesNumber', $MemesNumber);
             foreach ($User as $property => $value) {
                 $ViewUser->assign($property, $value);
             }
@@ -258,14 +243,56 @@ class UserController
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-
         } else {
-            $User->profile($_SESSION['id']);
             $module = Registry::getValue('module');
-            $ViewUser = new View($module, 'change.php');
-            foreach ($User as $property => $value) {
-                $ViewUser->assign($property, $value);
+            $ViewUser = new View($module, 'login_error.html');
+            try {
+                $ViewUser->addIntoTemplate();
+                $ViewUser->display();
+            } catch (Exception $e) {
+                echo $e->getMessage();
             }
+        }
+    }
+
+    public function changeAction()
+    {
+        if(isset($_SESSION['id']))
+        {
+            $User = new model\User();
+            if (isset($_POST['user'])) {
+                $User->changeProfile($_POST, $_SESSION['id']);
+                $User->profile($_SESSION['id']);
+                $module = Registry::getValue('module');
+                $ViewUser = new View($module, 'change.php');
+                foreach ($User as $property => $value) {
+                    $ViewUser->assign($property, $value);
+                }
+                try {
+                    $ViewUser->addIntoTemplate();
+                    $ViewUser->display();
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+
+            } else {
+                $User->profile($_SESSION['id']);
+                $module = Registry::getValue('module');
+                $ViewUser = new View($module, 'change.php');
+                $ViewUser->assign('title', 'Change Profile info');
+                foreach ($User as $property => $value) {
+                    $ViewUser->assign($property, $value);
+                }
+                try {
+                    $ViewUser->addIntoTemplate();
+                    $ViewUser->display();
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+            }
+        } else {
+            $module = Registry::getValue('module');
+            $ViewUser = new View($module, 'login_error.html');
             try {
                 $ViewUser->addIntoTemplate();
                 $ViewUser->display();
