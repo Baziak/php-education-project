@@ -1,7 +1,7 @@
 <div class="user-profile row col-md-12">
     <div class="profile-info col-md-3">
         <div class="avatar">
-            <img src="<?= BASE_URL . '/images/user_avatars/' . $this->avatar; ?>" class="avatar">
+            <img src="<?= BASE_URL . '/images/user_avatars/' . $this->avatar; ?>" class="avatar" alt="<?= $this->id; ?>">
         </div>
         <div class="profile-navigation">
             <ul class="user-info">
@@ -46,3 +46,4 @@
         } ?>
     </div>
 </div>
+<img src="<?php echo BASE_URL; ?>images/close.jpg" class="closeAvatar">
