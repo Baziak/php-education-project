@@ -222,9 +222,11 @@ class UserController
                 if ($User->isSubscribed($_GET['id'])) {
                     $ViewUser->assign('buttonClass', 'unsub');
                     $ViewUser->assign('buttonValue', 'Отписаться');
+                    $ViewUser->assign('data', 'unsubid');
                 } else {
                     $ViewUser->assign('buttonClass', 'sub');
                     $ViewUser->assign('buttonValue', 'Подписаться');
+                    $ViewUser->assign('data', 'subid');
                 }
             } else {
                 $User->profile($_SESSION['id']);
