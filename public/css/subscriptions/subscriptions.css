@@ -1,0 +1,42 @@
+.container {
+    float: left;
+    padding: 3px;
+    width: 100%;
+}
+
+.subscriptionsUserName {
+    font-size: 2em;
+    float: left;
+    padding: 10px;
+    width: 50%;
+}
+
+.subscriptionsUserName a {
+    text-decoration: none;
+    color: #333333;
+}
+
+.subscriptionsUserName a:hover {
+    color: #808080;
+}
+
+.avatar img {
+    width: 100px;
+    float: left;
+    padding: 10px;
+    height: 100px;
+    border-radius: 100%;
+}
+
+.dateUpdateUser {
+    float: left;
+    font-size: 1em;
+    color: #808080;
+    padding: 0px 10px;
+    width: 50%;
+}
+
+.buttonUnsubscribe {
+    float: right;
+    padding: 0px 10px;
+}

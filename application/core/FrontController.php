@@ -12,6 +12,7 @@ class FrontController
     private function __construct()
     {
     }
+
     private function __clone()
     {
     }
@@ -32,12 +33,13 @@ class FrontController
     }*/
     public function getControllerPath($controller, $module)
     {
-        $file=DIR_MOD.$module.'/controllers/'.$controller.'Controller.php';
+        $file = DIR_MOD . $module . '/controllers/' . $controller . 'Controller.php';
         if (!file_exists($file)) {
-            throw new Exception("File not found".$file);
+            throw new Exception("File not found" . $file);
         }
         return $file;
     }
+
     public function getControllerClass($controller, $controller_file, $module)
     {
         require_once $controller_file;
@@ -47,6 +49,7 @@ class FrontController
         }
         return new $class;
     }
+
     public function getControllerMethod($controller_class, $action, $controller_file)
     {
         require_once $controller_file;
@@ -55,21 +58,23 @@ class FrontController
         }
         return $controller_class->$action();
     }
+
     public function connectModel($module)
     {
         //require_once DIR_TABLES.'Tables.php';
         //require_once DIR_MOD."$module/model/DefaultModel.php";
     }
+
     public function dispatch(Request $request)
     {
-        $module=$request->getModule();
+        $module = $request->getModule();
         Registry::setValue($module, 'module');
         $obj = new Acl('admin');
-        $obj->hasPermission('user','mem','delete');
+        $obj->hasPermission('user', 'mem', 'delete');
         $controller = ucfirst($request->getController());
-        $action=$request->getAction().'Action';
-        $controller_file=self::getInstance()->getControllerPath($controller, $module);
-        $controller_class=self::getInstance()->getControllerClass($controller, $controller_file, $module);
+        $action = $request->getAction() . 'Action';
+        $controller_file = self::getInstance()->getControllerPath($controller, $module);
+        $controller_class = self::getInstance()->getControllerClass($controller, $controller_file, $module);
         //self::getInstance()->connectModel($module);
         self::getInstance()->getControllerMethod($controller_class, $action, $controller_file);
     }

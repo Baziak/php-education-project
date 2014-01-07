@@ -1,40 +1,146 @@
-div.user-profile
-{
-    font-family: tahoma,arial,verdana,sans-serif,Lucida Sans;
+
+div.user-profile {
+    font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
     font-size: 18px;
 }
 
-img.avatar
-{
+img.avatar {
     margin-top: 10px;
 }
 
-div.profile-navigation ul
-{
-    clear: both;
-}
-div.profile-navigation li
-{
-    list-style: none;
+div.avatar {
+    text-align: center;
 }
 
-div.profile-navigation li
-{
+div.profile-navigation ul {
+    clear: both;
+}
+
+div.profile-navigation li {
+    list-style: none;
     padding: 7px;
 }
 
-div.profile-navigation li>a
-{
+div.profile-navigation li > a > button {
+    width: 85%;
+}
+
+div.profile-navigation li > a {
     color: #000000;
 }
 
-div.profile-navigation li>a:hover
-{
+div.profile-navigation li a:hover {
     text-decoration: none;
 }
 
-div.profile-content
-{
+div.profile-content {
     border-left: 1px solid #c0c0c0;
     text-align: center;
+}
+
+div.profile-info > img {
+    margin-top: 10px;
+}
+
+ul.user-info {
+    border-bottom: 1px solid #c0c0c0;
+}
+
+div.meme-zone {
+    text-align: center;
+    width: 70%;
+    margin: 3% 20%;
+    padding: 5px;
+    background-color: #ffffff;
+    border: 2px solid rgb(85, 66, 158);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(85, 66, 158, 1);
+}
+
+div.meme-zone header {
+    border-bottom: 1px solid #563d7c;
+    text-align: left;
+}
+
+div.meme-zone footer {
+    border-top: 1px solid gray;
+}
+
+div.meme-zone > img {
+    max-height: 500px;
+    max-width: 500px;
+}
+
+img.meme {
+    margin: 10px;
+}
+
+div.user-change {
+    width: 30%;
+}
+
+input.form-control:focus {
+    border-color: #9724d2;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(189, 77, 247, 0.6);
+}
+
+ul.change-data {
+    list-style: none;
+    margin-top: 15px;
+}
+
+ul.change-data li {
+    margin-bottom: 15px;
+    padding-top: 15px;
+}
+
+div.meme-zone > div.likes_dislikes button {
+    background-color: #ffffff;
+    vertical-align: middle;
+    border: #ffffff;
+}
+
+div.meme-zone a:hover {
+    text-decoration: none;
+}
+
+div.password-condition {
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    background-color: #dcdcd9;
+    color: #a9a9a9;
+    padding: 5px;
+}
+
+.loading {
+    background: #333333;
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0.4;
+}
+
+#AjaxGif {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+}
+
+img.centreImg {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+}
+
+img.closeAvatar {
+    position: fixed;
+    top: 5%;
+    left: 90%;
+    width: 15px;
+    height: 15px;
+    display: none;
 }

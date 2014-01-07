@@ -11,5 +11,5 @@ use core\DataBase;
 
 class MemesStatus extends DataBase
 {
-    static protected $classTable="memes_2_status";
+    static protected $classTable = "memes_2_status";
 }

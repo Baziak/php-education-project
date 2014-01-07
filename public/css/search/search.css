@@ -1,0 +1,12 @@
+.wrapper{
+    margin-top: 20px;
+}
+.search-results{
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-top-color: transparent;
+}
+.picture {
+    height: 50px;
+    width: 50px;
+}

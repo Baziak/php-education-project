@@ -5,5 +5,5 @@ use core\DataBase;
 
 class CommentsRating extends DataBase
 {
-    static protected $classTable="comments_rating";
+    static protected $classTable = "comments_rating";
 }

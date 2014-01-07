@@ -27,10 +27,10 @@ class Mail
 
     public function __construct($from = '', $to = '', $subject = '', $body = '')
     {
-        $this->smtp_host = Config::getProperty("smtp","host");
-        $this->smtp_port = Config::getProperty("smtp","port");
-        $this->smtp_login = Config::getProperty("smtp","login");
-        $this->smtp_pass = Config::getProperty("smtp","password");;
+        $this->smtp_host = Config::getProperty("smtp", "host");
+        $this->smtp_port = Config::getProperty("smtp", "port");
+        $this->smtp_login = Config::getProperty("smtp", "login");
+        $this->smtp_pass = Config::getProperty("smtp", "password");;
 
         $this->mail_from = $from;
         $this->mail_to = $to;

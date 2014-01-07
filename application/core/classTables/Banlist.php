@@ -5,5 +5,5 @@ use core\DataBase;
 
 class Banlist extends DataBase
 {
-    static protected $classTable="banlist";
+    static protected $classTable = "banlist";
 }

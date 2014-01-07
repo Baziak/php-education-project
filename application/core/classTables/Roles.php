@@ -5,5 +5,5 @@ use core\DataBase;
 
 class Roles extends DataBase
 {
-    static protected $classTable="roles";
+    static protected $classTable = "roles";
 }

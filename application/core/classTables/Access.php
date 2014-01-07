@@ -12,5 +12,5 @@ use core\DataBase;
 
 class Access extends DataBase
 {
-    static protected $classTable="access";
+    static protected $classTable = "access";
 }

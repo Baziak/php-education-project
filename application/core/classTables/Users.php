@@ -5,5 +5,5 @@ use core\DataBase;
 
 class Users extends DataBase
 {
-    static protected $classTable="users";
+    static protected $classTable = "users";
 }

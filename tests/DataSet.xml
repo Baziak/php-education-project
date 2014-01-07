@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="memes_tags">
+        <column>id</column>
+        <column>tag</column>
+        <column>meme_id</column>
+        <row>
+            <value>1</value>
+            <value>FOO Bat</value>
+            <value>11</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>TOR Bautista</value>
+            <value>33</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Mika</value>
+            <value>44</value>
+        </row>
+    </table>
+</dataset>

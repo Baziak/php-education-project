@@ -5,5 +5,5 @@ use core\DataBase;
 
 class TextAreas extends DataBase
 {
-    static protected $classTable="text_areas";
+    static protected $classTable = "text_areas";
 }

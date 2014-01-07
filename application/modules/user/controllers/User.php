@@ -9,7 +9,7 @@ class UserController
 {
     public function registrationAction()
     {
-        $module=Registry::getValue('module');
+        $module = Registry::getValue('module');
         $v = new View($module, 'registration.php');
         $v->assign('title', 'New user');
 

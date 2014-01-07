@@ -5,5 +5,5 @@ use core\DataBase;
 
 class Categories extends DataBase
 {
-    static protected $classTable="categories";
+    static protected $classTable = "categories";
 }

@@ -7,89 +7,109 @@
  */
 namespace modules\news\model;
 
+use core\classTables\Ratings;
 use core\classTables\Roles;
 use core\classTables\Memes;
+use core\classTables\Subscription;
 use core\classTables\Users;
 use modules\user\model\User;
 
 class NewsModel
 {
     static private $memesOnPage;
-    public static function displayMemes()
+
+    public static function getMemes($startFrom)
     {
-        $selectMemes=new Memes();
-        $selObj=$selectMemes->selectPrepare();
-        /*$column=count($selObj->selectColumns(['name','path','likes','date_create','dislikes'])
-            ->fetchAll(null));*/
-        $result=$selObj->selectColumns(['name', 'path', 'likes', 'date_create', 'dislikes'])
+        $selectMemes = new Memes();
+        $selObj = $selectMemes->selectPrepare();
+        $result = $selObj
+            ->selectColumns(['user_id', 'username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+            ->from(['users'])->where(['memes.`user_id`=' => 'users.`id`'])->order('memes.`date_create`', 'DESC')
+            ->limit($startFrom, 5)->fetchAll(null);
+        return $result;
+    }
+
+    public static function getMemesByRating($startFrom)
+    {
+        $selectMemes = new Memes();
+        $selObj = $selectMemes->selectPrepare();
+        $result = $selObj
+            ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+            ->from(['users'])->where(['memes.user_id=' => 'users.`id`'])->order('likes', 'DESC')
+            ->limit($startFrom, 5)->fetchAll(null);
+        return $result;
+    }
+
+    public static function userRating()
+    {
+        $ratings = new Ratings();
+        if (!empty($_SESSION['userID'])) {
+            $userID = $_SESSION['userID'];
+            $selObj = $ratings->selectPrepare();
+            $getRating = $selObj->selectColumns(['memes_id'])->where(['user_id=' => '?'])
+                ->fetchAll([$userID]);
+            return $getRating;
+        } else return;
+        /*$selObj=$ratings->selectPrepare();
+        $getRating=$selObj->selectColumns(['memes_id'])->where(['user_id='=>'?'])
+            ->fetchAll([$userID]);
+        return $getRating;*/
+    }
+    public static function userSubs($startFrom)
+    {
+        $selectSubs = new Subscription();
+        $selObj = $selectSubs->selectPrepare();
+        $result = $selObj
+            ->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
+        ->join('inner','memes','target_id','user_id')->join('inner','users','users.`id`','memes.`user_id`')
+           ->where(['subscription.`user_id`=' => $_SESSION['id']])->order('memes.`date_create`', 'DESC')
+            ->limit($startFrom, 5)
             ->fetchAll(null);
-        $rows=count($result);
-        //var_dump($result);
-        /*$result=array();
-        for ($i=0;$i<$column;$i++){
-            $result[$i]=$selObj->selectColumns(['path'])->fetch(null);
-        }*/
+                    //->limit($startFrom, 5)
         return $result;
     }
-    public static function getMemes($page = null)
-    {
-        self::$memesOnPage=3;
-        if ($page == null) {
-            $begin=0;
-            $end=self::$memesOnPage;
-        } else {
-            $end=self::$memesOnPage*$page;
-            $begin=$end-self::$memesOnPage;
-        }
-        $selectMemes=new Memes();
-        $selObj=$selectMemes->selectPrepare();
-        //$result=$selObj->selectColumns(['*'])->fetchAll(null);
-        $result=$selObj->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id='=>'users.id'])->order('memes.date_create', 'DESC')
-            ->limit($begin, $end)->fetchAll(null);
-        return $result;
-    }
-    public static function getMemesByRating()
-    {
-        $selectMemes=new Memes();
-        $selObj=$selectMemes->selectPrepare();
-        //$result=$selObj->selectColumns(['*'])->fetchAll(null);
-        $result=$selObj->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id='=>'users.id'])->order('likes', 'DESC')
-            ->fetchAll(null);
-        return $result;
-    }
-    public static function updateLike($meme_id)
+
+    /*public static function updateLike($meme_id)
     {
         $insertMemes=new Memes();
-        $insertMemes->update(['likes'=>'likes+1'], 'id=?', ["$meme_id"]);
+        $ratings=new Ratings();
+        $userID=$_SESSION['userID'];
+        $selObj=$ratings->selectPrepare();
+        $getRating=$selObj->selectColumns(['rating'])->where(['user_id='=>'? and ', 'memes_id='=>'?'])
+            ->fetch([$userID, $meme_id]);
+        if ($getRating==null && !(empty($userID))) {
+            $ratings->insert(['memes_id'=>"$meme_id", 'user_id'=>"$userID", 'rating'=>'1']);
+            $insertMemes->update(['likes'=>'likes+1'], 'id=?', ["$meme_id"]);
+        }
     }
     public static function updateDislike($meme_id)
     {
+        $ratings=new Ratings();
         $insertMemes=new Memes();
-        $insertMemes->update(['dislikes'=>'dislikes+1'], 'id=?', ["$meme_id"]);
-    }
-    public static function getCountPages()
-    {
-        $selectMemes=new Memes();
-        $selObj=$selectMemes->selectPrepare();
-        //$result=$selObj->selectColumns(['*'])->fetchAll(null);
-        $countPages=
-            $selObj->selectColumns(['username', 'name', 'path', 'likes', 'dislikes', 'memes.date_create', 'memes.id'])
-            ->from(['users'])->where(['memes.user_id='=>'users.id'])
-            ->order('memes.date_create', 'DESC')->fetchAll(null);
-        if ($countPages!=null){
-            $countPages=ceil(count($countPages)/self::$memesOnPage);
+        $userID=$_SESSION['userID'];
+        $selObj=$ratings->selectPrepare();
+        $getRating=$selObj->selectColumns(['rating'])->where(['user_id='=>'? and ', 'memes_id='=>'?'])
+            ->fetch([$userID, $meme_id]);
+        if ($getRating==null && !(empty($userID))) {
+            $ratings->insert(['memes_id'=>"$meme_id", 'user_id'=>"$userID", 'rating'=>'0']);
+            $insertMemes->update(['dislikes'=>'dislikes+1'], 'id=?', ["$meme_id"]);
         }
-        return $countPages;
     }
-    public static function limitPages($page)
+    public static function getLikesDislikes($meme_id)
     {
-        $memesOnPage=3;
-        $end=$memesOnPage*$page;
-        $begin=$end-$memesOnPage+1;
-        echo "begin=".$begin."<br>end=".$end;
-        /*self::$page=$begin.",".$end;
-        return self::$page;*/
+        $insertMemes=new Memes();
+        $selObj2=$insertMemes->selectPrepare();
+        $likes=$selObj2->selectColumns(['likes', 'dislikes'])->where(['id='=>'?'])->fetchAll([$meme_id]);
+        return $likes;
+    }*/
+    public static function topUsers()
+    {
+        $selUsers = new Users();
+        $selObj1 = $selUsers->selectPrepare();
+        $users = $selObj1->selectColumns(['username', 'avatar'])->distinct('1')->join('inner', 'memes', 'id', 'user_id')
+            ->where(['year(memes.`date_create`)=' => 'year(now()) and',
+                'week(memes.`date_create`)=' => '(week(now(),7)-1)'])
+            ->order('likes', 'desc')->fetchAll(null);
+        return $users;
     }
 }

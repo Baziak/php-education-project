@@ -10,18 +10,45 @@ class IndexController
 {
     public function indexAction()
     {
-        $module=Registry::getValue('module');
+        $module = Registry::getValue('module');
         $v = new View($module, 'home.php');
         $v->assign('title', 'Home page');
-        $v->assign('users', DefaultModel::selectUsers());
+        //$v->assign('users', DefaultModel::test());
+        $v->assign('users', DefaultModel::getUsersY());
+        //$v->assign('sub',DefaultModel::ptinSub());
+        //DefaultModel::updateUsers();
+        //DefaultModel::testSelect();
+        //$users=DefaultModel::getUsersY();
+        //var_dump($users);
         try {
             $v->addIntoTemplate();
             $v->display();
             //DefaultModel::printDb();
-            //DefaultModel::insertUsers();
+
             //DefaultModel::deleteUsers();
             //DefaultModel::updateUsers();
             //DefaultModel::selectUsers();
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function loginAction()
+    {
+        $module = Registry::getValue('module');
+        $v = new View($module, 'login.php');
+        $v->assign('title', 'Log In');
+        $user = DefaultModel::login();
+        if ($user != null) {
+            $_SESSION['userID'] = $user['id'];
+        } else {
+            //header("Location:".BASE_URL."user/user/registration");
+        }
+        $v->assign('userLogIn', DefaultModel::login());
+        try {
+            $v->addIntoTemplate();
+            $v->display();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
